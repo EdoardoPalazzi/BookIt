@@ -1,0 +1,674 @@
+WindowManager:
+    SignInWindow:
+    MainWindow:
+    SignUpWindow:
+    AddBookToSell:
+
+
+<SignInWindow>:
+
+    name: "sign in"
+
+    FloatLayout:
+
+        Label:
+            text: "BookIt"
+            color: 143/255, 19/255, 19/255, 1
+            font_name: 'Georgia'
+            pos_hint: {"x": 0, "top": 1.4}
+            font_size: 60
+
+        Label:
+            text: "sign in"
+            color: 0,0,0,1
+            pos_hint: {"x": 0, "top": 1.2}
+
+        MDTextField:
+            id: email
+            hint_text: "email"
+            icon_right: "email"
+            size_hint: 0.8, None
+            pos_hint: {"x": 0.1, "top": 0.65}
+            width: 300
+            required: True
+            multiline: False
+
+        MDTextField:
+            id: password
+            hint_text: "password"
+            required: True
+            helper_text: "*or click on forgot password"
+            helper_text_mode: "on_focus"
+            icon_right: "lock"
+            size_hint: 0.8, None
+            color_mode: 'custom'
+            max_text_length: 30
+            pos_hint: {"x": 0.1, "top": 0.55}
+
+
+        MDFillRoundFlatButton:
+            text: "log in"
+            font_size: 15
+            color: 1,1,1,1
+            size_hint: 0.5, 0.05
+            pos_hint: {"x":0.25, "top": 0.4}
+            on_release:
+                app.root.current = "main" if password.text == "1" else "sign in"
+                root.manager.transition.direction = "left"
+        MDTextButton:
+            text: "create an account"
+            font_size: 12
+            canvas.before:
+            color: 0,0,0,1
+            size_hint: 0.3, 0.05
+            pos_hint: {"x":0.35, "top": 0.3}
+            on_release:
+                app.root.current = "sign up"
+                root.manager.transition.direction = "up"
+
+<SignUpWindow>:
+    name: "sign up"
+
+    FloatLayout:
+
+        Label:
+            text: "BookIt"
+            color: 134/255, 89/255, 45/255, 1
+            font_name: 'Georgia'
+            pos_hint: {"x": 0, "top": 1.4}
+            font_size: 60
+
+        Label:
+            text: "sign up"
+            color: 0,0,0,1
+            pos_hint: {"x": 0, "top": 1.2}
+
+        MDTextField:
+            id: full name
+            hint_text: "full name"
+            required: True
+            size_hint: 0.8, None
+            pos_hint: {"x": 0.1, "top": 0.65}
+            multiline: False
+
+        MDTextField:
+            id: email
+            hint_text: "email"
+            required: True
+            size_hint: 0.8, None
+            pos_hint: {"x": 0.1, "top": 0.55}
+            multiline: False
+
+        MDTextField:
+            id: password
+            hint_text: "password"
+            required: True
+            size_hint: 0.8, None
+            pos_hint: {"x": 0.1, "top": 0.45}
+            multiline: False
+
+        MDTextField:
+            id: confirmPassword
+            hint_text: "confirm password"
+            required: True
+            size_hint: 0.8, None
+            pos_hint: {"x": 0.1, "top": 0.35}
+            multiline: False
+
+        MDFillRoundFlatButton:
+            text: "create account"
+            font_size: 15
+            color: 1,1,1,1
+            size_hint: 0.5, 0.05
+            pos_hint: {"x":0.25, "top": 0.2}
+            on_release:
+                app.root.current = "sign in" if password.text == confirmPassword.text else "sign up"
+                root.manager.transition.direction = "left"
+
+
+<MainWindow>:
+    name: "main"
+
+    MDBottomNavigation:
+        panel_color: 163/255, 39/255, 11/255, 1
+
+        MDBottomNavigationItem:
+            name: 'screen 1'
+            text: 'Feed'
+            icon: 'newspaper-variant-outline'
+
+            MDToolbar:
+                title: 'BookIt'
+                pos_hint: {'center_x': 0.5, 'top': 1}
+                md_bg_color: 163/255, 39/255, 11/255, 1
+                right_action_items: [["magnify", lambda x: print("search")]]
+
+            MDTabs:
+                id: tab_panel
+                tab_display_mode:'text'
+                background_color: 163 / 255, 39 / 255, 11 / 255, 1
+                pos_hint: {"x": 0, "top": 0.9}
+
+                MDTabsBase:
+                    name: 'students'
+                    text: "Students"
+                    MDLabel:
+                        font_style: 'Body1'
+                        theme_text_color: 'Primary'
+                        text: "Here is my music list :)"
+                        halign: 'center'
+                MDTabsBase:
+                    name: 'groups'
+                    text: 'Groups'
+                    icon: "movie"
+                    MDLabel:
+                        font_style: 'Body1'
+                        theme_text_color: 'Primary'
+                        text: "Show movies here :)"
+                        halign: 'center'
+
+        MDBottomNavigationItem:
+            name: 'screen2'
+            text: 'Buy'
+            icon: 'book-open-page-variant'
+
+            MDTextField:
+                hint_text: "search book *isbn, title..."
+                icon_right: "magnify"
+                size_hint: 0.85, None
+                pos_hint: {"x": 0.075, "top": 1}
+                multiline: False
+
+            MDLabel:
+                text: 'filters'
+                pos_hint: {'center_y': 0.85, 'x': 0.04}
+
+            MDTextField:
+                hint_text: "Max. price ($)"
+                line_color_focus: 163 / 255, 39 / 255, 11 / 255, 1
+                size_hint: 0.4, None
+                pos_hint: {'top': 0.83, 'x': 0.06}
+            MDTextField:
+                hint_text: "Max. distance (mi.)"
+                line_color_focus: 163 / 255, 39 / 255, 11 / 255, 1
+                size_hint: 0.4, None
+                pos_hint: {'x': 0.54, 'top': 0.83}
+            MDTextField:
+                hint_text: "location"
+                line_color_focus: 163 / 255, 39 / 255, 11 / 255, 1
+                helper_text: "*country, state, city, college"
+                helper_text_mode: "on_focus"
+                helper_text_size: 5
+                size_hint: 0.4, None
+                pos_hint: {'top': 0.70, 'x': 0.06}
+            MDLabel:
+                text: "Followers"
+                pos_hint: {'center_y': 0.67, 'x': 0.56}
+            MDLabel:
+                text: "only"
+                pos_hint: {'center_y': 0.64, 'x': 0.56}
+            MDSwitch:
+                width: dp(40)
+                pos_hint: {'top': 0.7, 'x': 0.84}
+
+            MDLabel:
+                text: 'sellers'
+                pos_hint: {'center_y': 0.55, 'x': 0.04}
+
+            ScrollView:
+                pos_hint: {"top": 0.5, "left": 1}
+                size_hint: 1, 0.75
+                MDList:
+                    id: myList
+                    padding: 0
+                    row_default_height:'100dp'
+
+                    MDCard:
+                        size_hint: 1, 0.09
+                        focus_behavior: True
+                        ripple_behavior: True
+                        GridLayout:
+                            cols: 2
+                            Image:
+                                source: "principleOFmarketing.jpg"
+                                size_hint: .3, 0.12
+
+                            FloatLayout:
+                                MDLabel:
+                                    text: "$100"
+                                    font_size: 15
+                                    color: 134/255, 135/255, 134/255, 1
+                                    pos_hint: {"center_y": 0.8, "center_x": 0.55}
+                                MDLabel:
+                                    text: "San Francisco, CA"
+                                    pos_hint: {"center_x": 1}
+                                    color: 134/255, 135/255, 134/255, 1
+                                    pos_hint: {"center_y": 0.8, "center_x": 1}
+                                MDLabel:
+                                    text: "30"
+                                    pos_hint: {"center_y": 0.2, "center_x": 0.55}
+                                MDIconButton:
+                                    icon: "account-search"
+                                    pos_hint: {"center_y": 0.2, "center_x": 0.22}
+                                MDTextButton:
+                                    text: "interested"
+                                    custom_color: 25/255, 212/255, 29/255, 1
+                                    pos_hint: {"center_y": 0.2, "right": 0.9}
+
+
+
+                    MDCard:
+                        size_hint: 1, 0.09
+                        focus_behavior: True
+                        ripple_behavior: True
+                        GridLayout:
+                            cols: 3
+                            Image:
+                                source: "introTOsociology.jpg"
+                                size_hint: .3, 0.12
+                            Label:
+                                text: ""
+                                size_hint: 0.05, None
+                            GridLayout:
+                                rows: 2
+                                MDLabel:
+                                    text: "Introduction to Sociology, 11th edition"
+                                    font_size: 15
+                                GridLayout:
+                                    cols: 3
+                                    MDLabel:
+                                        text: "Houston, TX"
+                                        pos_hint: {"y": 0.95}
+                                        font_size: 15
+                                        color: 134/255, 135/255, 134/255, 1
+                                    MDLabel:
+                                        text: "$45"
+                                        color: 134/255, 135/255, 134/255, 1
+                                    MDIconButton:
+                                        icon: "delete"
+
+                                        on_release: app.remove_item(root)
+
+
+
+        MDBottomNavigationItem:
+            name: 'screen 3'
+            text: 'Sell'
+            icon: 'currency-usd'
+
+            MDTextField:
+                hint_text: "search my books"
+                icon_right: "magnify"
+                size_hint: 0.85, None
+                pos_hint: {"x": 0.075, "top": 0.87}
+                multiline: False
+
+            MDLabel:
+                text: "What I'm Selling"
+                pos_hint: {"center_x": 0.53, "center_y": 0.93}
+                font_size: 30
+                color: 163/255, 39/255, 11/255, 1
+
+            ScrollView:
+                pos_hint: {"top": 0.75, "left": 1}
+                size_hint: 1, 0.75
+                MDList:
+                    id: myList
+                    padding: 0
+                    row_default_height:'100dp'
+
+                    MDCard:
+                        size_hint: 1, 0.09
+                        focus_behavior: True
+                        ripple_behavior: True
+                        GridLayout:
+                            cols: 3
+                            Image:
+                                source: "principleOFmarketing.jpg"
+                                size_hint: .3, 0.12
+                            Label:
+                                text: ""
+                                size_hint: 0.05, None
+                            GridLayout:
+                                rows: 2
+                                MDLabel:
+                                    text: "Principles of Marketing, 17th edition"
+                                    font_size: 15
+                                GridLayout:
+                                    cols: 4
+                                    MDLabel:
+                                        text: "Houston, TX"
+                                        pos_hint: {"y": 0.95}
+                                        font_size: 15
+                                        color: 134/255, 135/255, 134/255, 1
+                                    MDLabel:
+                                        text: "$100"
+                                        color: 134/255, 135/255, 134/255, 1
+                                    MDIconButton:
+                                        icon: "pencil"
+                                        pos_hint: {"center_x": 0.95}
+                                        on_release: app.remove_item(root)
+                                    MDIconButton:
+                                        icon: "delete"
+                                        pos_hint: {"center_x": 0.9}
+                                        on_release: app.remove_item(root)
+
+                    MDCard:
+                        size_hint: 1, 0.09
+                        focus_behavior: True
+                        ripple_behavior: True
+                        GridLayout:
+                            cols: 3
+                            Image:
+                                source: "introTOsociology.jpg"
+                                size_hint: .3, 0.12
+                            Label:
+                                text: ""
+                                size_hint: 0.05, None
+                            GridLayout:
+                                rows: 2
+                                MDLabel:
+                                    text: "Introduction to Sociology, 11th edition"
+                                    font_size: 15
+                                GridLayout:
+                                    cols: 4
+                                    MDLabel:
+                                        text: "Houston, TX"
+                                        pos_hint: {"y": 0.95}
+                                        font_size: 15
+                                        color: 134/255, 135/255, 134/255, 1
+                                    MDLabel:
+                                        text: "$45"
+                                        color: 134/255, 135/255, 134/255, 1
+                                    MDIconButton:
+                                        icon: "pencil"
+                                        pos_hint: {"center_x": 0.95}
+                                        on_release: app.remove_item(root)
+                                    MDIconButton:
+                                        icon: "delete"
+                                        pos_hint: {"center_x": 0.9}
+                                        on_release: app.remove_item(root)
+
+                    MDCard:
+                        size_hint: 1, 0.09
+                        focus_behavior: True
+                        ripple_behavior: True
+                        GridLayout:
+                            cols: 3
+                            Image:
+                                source: "introTOsociology.jpg"
+                                size_hint: .3, 0.12
+                            Label:
+                                text: ""
+                                size_hint: 0.05, None
+                            GridLayout:
+                                rows: 2
+                                MDLabel:
+                                    text: "Introduction to Sociology, 11th edition"
+                                    font_size: 15
+                                GridLayout:
+                                    cols: 4
+                                    MDLabel:
+                                        text: "Houston, TX"
+                                        pos_hint: {"y": 0.95}
+                                        font_size: 15
+                                        color: 134/255, 135/255, 134/255, 1
+                                    MDLabel:
+                                        text: "$100"
+                                        color: 134/255, 135/255, 134/255, 1
+                                    MDIconButton:
+                                        icon: "pencil"
+                                        pos_hint: {"center_x": 0.95}
+                                        on_release: app.remove_item(root)
+                                    MDIconButton:
+                                        icon: "delete"
+                                        pos_hint: {"center_x": 0.9}
+                                        on_release: app.remove_item(root)
+
+                    MDCard:
+                        size_hint: 1, 0.09
+                        focus_behavior: True
+                        ripple_behavior: True
+                        GridLayout:
+                            cols: 3
+                            Image:
+                                source: "introTOsociology.jpg"
+                                size_hint: .3, 0.12
+                            Label:
+                                text: ""
+                                size_hint: 0.05, None
+                            GridLayout:
+                                rows: 2
+                                MDLabel:
+                                    text: "Introduction to Sociology, 11th edition"
+                                    font_size: 15
+                                GridLayout:
+                                    cols: 4
+                                    MDLabel:
+                                        text: "Houston, TX"
+                                        pos_hint: {"y": 0.95}
+                                        font_size: 15
+                                        color: 134/255, 135/255, 134/255, 1
+                                    MDLabel:
+                                        text: "$100"
+                                        color: 134/255, 135/255, 134/255, 1
+                                    MDIconButton:
+                                        icon: "pencil"
+                                        pos_hint: {"center_x": 0.95}
+                                        on_release: app.remove_item(root)
+                                    MDIconButton:
+                                        icon: "delete"
+                                        pos_hint: {"center_x": 0.9}
+                                        on_release: app.remove_item(root)
+
+                    MDCard:
+                        size_hint: 1, 0.09
+                        focus_behavior: True
+                        ripple_behavior: True
+                        GridLayout:
+                            cols: 3
+                            Image:
+                                source: "introTOsociology.jpg"
+                                size_hint: .3, 0.12
+                            Label:
+                                text: ""
+                                size_hint: 0.05, None
+                            GridLayout:
+                                rows: 2
+                                MDLabel:
+                                    text: "Introduction to Sociology, 11th edition"
+                                    font_size: 15
+                                GridLayout:
+                                    cols: 4
+                                    MDLabel:
+                                        text: "Houston, TX"
+                                        pos_hint: {"y": 0.95}
+                                        font_size: 15
+                                        color: 134/255, 135/255, 134/255, 1
+                                    MDLabel:
+                                        text: "$100"
+                                        color: 134/255, 135/255, 134/255, 1
+                                    MDIconButton:
+                                        icon: "pencil"
+                                        pos_hint: {"center_x": 0.95}
+                                        on_release: app.remove_item(root)
+                                    MDIconButton:
+                                        icon: "delete"
+                                        pos_hint: {"center_x": 0.9}
+                                        on_release: app.remove_item(root)
+
+            MDFloatingActionButton:
+                icon: "plus"
+                md_bg_color: 222/255, 67/255, 55/255, 1
+                elevation_normal: 10
+                pos_hint: {"center_x": 0.87, "top": 0.14}
+                opposite_colors: True
+                on_release:
+                    app.root.current = "book to sell"
+                    root.manager.transition.direction = "up"
+
+        MDBottomNavigationItem:
+            name: 'screen 4'
+            text: 'Texts'
+            icon: 'message-text'
+
+            MDTextField:
+                hint_text: "search for messages"
+                icon_right: "magnify"
+                size_hint: 0.85, None
+                pos_hint: {"x": 0.075, "top": 1}
+                multiline: False
+
+            MDTabs:
+                background_color: 163/255, 39/255, 11/255, 1
+                id: menutab
+                pos_hint: {"x": 0, "top": 0.9}
+
+                MDTabsBase:
+                    id: stud_tab
+                    text: "CUSTOMERS"
+
+                MDTabsBase:
+                    id: group_tab
+                    text: "SELLERS"
+
+        MDBottomNavigationItem:
+            name: 'screen 5'
+            text: 'Profile'
+            icon: 'account-circle'
+
+            MDTextField:
+                hint_text: "search your books"
+                icon_right: "magnify"
+                size_hint: 0.85, None
+                pos_hint: {"x": 0.075, "top": 0.87}
+                multiline: False
+
+            MDLabel:
+                text: "What I'm Selling"
+                pos_hint: {"center_x": 0.53, "center_y": 0.93}
+                font_size: 30
+                color: 163/255, 39/255, 11/255, 1
+
+            ScrollView:
+                pos_hint: {"center_y": 0.32}
+                do_scroll_x: False
+                MDList:
+                    id: listSell
+                    ThreeLineAvatarIconListItem:
+                        type: "three-line"
+                        text: "Principles of Marketing, 17th edition"
+                        secondary_text: "$100"
+                        tertiary_text: "Houston, TX"
+                        ImageLeftWidget:
+                            source: 'principleOFmarketing.jpg'
+                            size_hint: 3, 3
+                            pos_hint: {'center_x': 0.5, 'center_y':0.45}
+                        IconRightWidget:
+                            icon: "pencil"
+                        IconRightWidget:
+                            icon: "delete"
+                    ThreeLineAvatarListItem:
+                        type: "three-line"
+                        text: "Principles of Marketing, 17th edition"
+                        secondary_text: "$100"
+                        tertiary_text: "Houston, TX"
+                        ImageLeftWidget:
+                            source: 'principleOFmarketing.jpg'
+                    ThreeLineAvatarListItem:
+                        type: "three-line"
+                        text: "Principles of Marketing, 17th edition"
+                        secondary_text: "$100"
+                        tertiary_text: "Houston, TX"
+                        ImageLeftWidget:
+                            source: 'principleOFmarketing.jpg'
+                    ThreeLineAvatarListItem:
+                        type: "three-line"
+                        text: "Principles of Marketing, 17th edition"
+                        secondary_text: "$100"
+                        tertiary_text: "Houston, TX"
+                        ImageLeftWidget:
+                            source: 'principleOFmarketing.jpg'
+                    ThreeLineAvatarListItem:
+                        type: "three-line"
+                        text: "Principles of Marketing, 17th edition"
+                        secondary_text: "$100"
+                        tertiary_text: "Houston, TX"
+                        ImageLeftWidget:
+                            source: 'principleOFmarketing.jpg'
+                    ThreeLineAvatarListItem:
+                        type: "three-line"
+                        text: "Principles of Marketing, 17th edition"
+                        secondary_text: "$100"
+                        tertiary_text: "Houston, TX"
+                        ImageLeftWidget:
+                            source: 'principleOFmarketing.jpg'
+                    ThreeLineAvatarListItem:
+                        type: "three-line"
+                        text: "Principles of Marketing, 17th edition"
+                        secondary_text: "$100"
+                        tertiary_text: "Houston, TX"
+                        ImageLeftWidget:
+                            source: 'principleOFmarketing.jpg'
+                    ThreeLineAvatarListItem:
+                        type: "three-line"
+                        text: "Principles of Marketing, 17th edition"
+                        secondary_text: "$100"
+                        tertiary_text: "Houston, TX"
+                        ImageLeftWidget:
+                            source: 'principleOFmarketing.jpg'
+
+            MDFloatingActionButton:
+                icon: "plus"
+                md_bg_color: 222/255, 67/255, 55/255, 1
+                elevation_normal: 10
+                pos_hint: {"center_x": 0.87, "top": 0.14}
+                opposite_colors: True
+                on_release:
+                    app.root.current = "book to sell"
+                    root.manager.transition.direction = "up"
+
+<AddBookToSell>:
+
+    name: "book to sell"
+
+    FloatLayout:
+        MDRaisedButton:
+            text: "cancel"
+            elevation_normal: 2
+            opposite_colors: True
+            pos_hint: {'center_x': 0.8, 'center_y': 0.1}
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "down"
+
+        TextInput:
+            id: book_name
+            size_hint: (.2, 0.2)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        TextInput:
+            id: city
+            size_hint: (.2, 0.2)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+        TextInput:
+            id: price
+            size_hint: (.2, 0.2)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+
+        MDRaisedButton:
+            text: "add"
+            elevation_normal: 2
+            opposite_colors: True
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            on_release:
+                #lambda x: app.new_message(str(book_name), str(city), str(price))
+                app.new_message(str(book_name), str(city), str(price))
+                #app.root.current = "main"
+                #root.manager.transition.direction = "down"
+                #app.show_sell()
+#right_action_items: [["magnify", lambda x: app.callback()]]
+
+
+
+
+
